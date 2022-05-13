@@ -221,7 +221,7 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 519420031}
 --- !u!50 &390474502
 Rigidbody2D:
   serializedVersion: 4
@@ -282,6 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
+  mainCamera: {fileID: 519420031}
 --- !u!61 &390474506
 BoxCollider2D:
   m_ObjectHideFlags: 0

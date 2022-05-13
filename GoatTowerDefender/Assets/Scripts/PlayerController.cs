@@ -14,12 +14,14 @@ public class PlayerController : MonoBehaviour
     //Global Variabels
     public float moveSpeed = 1.0f;
 
+    [SerializeField] private Camera mainCamera;
+
     private Vector2 moveInput;
     private Rigidbody2D rb;
     private Animator anim;
-    private bool FacingRight = false;
+    private bool FacingLeft = false;
     private float attack = 0;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -30,36 +32,42 @@ public class PlayerController : MonoBehaviour
    
     void FixedUpdate()
     {
+
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        mousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
+
         //Moves Player based on moveSpeed & Fixed Delta Time
-        if(attack == 0)
+        if (attack == 0)
             rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
         
         //Sets Animation for sprite to walk when moving
         anim.SetBool("moveState", moveInput.x != 0);
         anim.SetBool("fireState", attack != 0);
 
-        //Sprite facing the proper direction
-        if (moveInput.x == 1.0f && FacingRight)
-        {
-            Flip();
-        }
-
-        if( moveInput.x == -1.0f && !FacingRight)
-        {
-            Flip();
-        }
+        Flip(mousePosition.x);
 
     }
 
     /// <summary>
     /// This function flips the sprites horizontal orientation. 
     /// </summary>
-    void Flip()
+    void Flip(float x)
     {
-        Vector3 currentScale = gameObject.transform.localScale;
-        currentScale.x *= -1;
-        gameObject.transform.localScale = currentScale;
-        FacingRight = !FacingRight;
+        if (x < 0 && !FacingLeft)
+        {
+            Vector3 currentScale = gameObject.transform.localScale;
+            currentScale.x *= -1;
+            gameObject.transform.localScale = currentScale;
+            FacingLeft = true;
+        }
+        else if( x > 0 && FacingLeft)
+        {
+            Vector3 currentScale = gameObject.transform.localScale;
+            currentScale.x *= -1;
+            gameObject.transform.localScale = currentScale;
+            FacingLeft = false;
+        }
+     
     }
 
     /// <summary>
