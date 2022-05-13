@@ -13,7 +13,10 @@ public class PlayerController : MonoBehaviour
 {
     //Global Variabels
     public float moveSpeed = 1.0f;
-
+    public GameObject arrow;
+    
+    [SerializeField] private Transform shotPoint;
+    [SerializeField] private float launchForce;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GameObject Bow;
     
@@ -23,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private bool FacingLeft = false;
     private float attack = 0;
     
+
     /// <summary>
     /// Our Start Function for this script.
     /// Set our rigidboy and animation components.
@@ -43,6 +47,7 @@ public class PlayerController : MonoBehaviour
         //Gets the world position of our mouse cursor
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         mousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
+        Debug.Log(mousePosition);
 
         //Moves Player based on moveSpeed & Fixed Delta Time
         if (attack == 0)
@@ -51,10 +56,12 @@ public class PlayerController : MonoBehaviour
         //Sets Animation for sprite to walk when moving
         anim.SetBool("moveState", moveInput.x != 0);
         anim.SetBool("fireState", attack != 0);
-
+        
+        //Bow Aiming
         Vector2 bowPos = Bow.transform.position;
-        Vector2 bowDirection = mousePosition - bowPos;
+        Vector2 bowDirection = mousePosition - bowPos; 
         Bow.transform.right = bowDirection;
+        
 
         //Flips our player sprite to orientate to where the mouse is
         Flip(mousePosition.x);
@@ -66,7 +73,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Flip(float x)
     {
-        if (x < 0 && !FacingLeft)
+
+        float playerPos = x - rb.position.x;
+
+        if (playerPos < 0.0f && !FacingLeft)
         {
             Vector3 currentScale = gameObject.transform.localScale;
             currentScale.x *= -1;
@@ -75,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
             Bow.transform.localScale *= -1;
         }
-        else if( x > 0 && FacingLeft)
+        else if(playerPos > 0.0f && FacingLeft)
         {
             Vector3 currentScale = gameObject.transform.localScale;
             currentScale.x *= -1;
@@ -112,6 +122,12 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
+    }
+
+    void Shoot()
+    {
+        GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
+        newArrow.GetComponent<Rigidbody2D>().velocity = transform.right * launchForce;
     }
 
     /// <summary>
