@@ -15,14 +15,18 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 1.0f;
 
     [SerializeField] private Camera mainCamera;
-
+    [SerializeField] private GameObject Bow;
+    
     private Vector2 moveInput;
     private Rigidbody2D rb;
     private Animator anim;
     private bool FacingLeft = false;
     private float attack = 0;
     
-    // Start is called before the first frame update
+    /// <summary>
+    /// Our Start Function for this script.
+    /// Set our rigidboy and animation components.
+    /// </summary>
     void Start()
     {
         //Set Animation and Rigidbody 
@@ -30,9 +34,13 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
     }
    
+    /// <summary>
+    /// Fixed Update Function
+    /// </summary>
     void FixedUpdate()
     {
 
+        //Gets the world position of our mouse cursor
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         mousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
 
@@ -44,6 +52,11 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("moveState", moveInput.x != 0);
         anim.SetBool("fireState", attack != 0);
 
+        Vector2 bowPos = Bow.transform.position;
+        Vector2 bowDirection = mousePosition - bowPos;
+        Bow.transform.right = bowDirection;
+
+        //Flips our player sprite to orientate to where the mouse is
         Flip(mousePosition.x);
 
     }
@@ -59,6 +72,8 @@ public class PlayerController : MonoBehaviour
             currentScale.x *= -1;
             gameObject.transform.localScale = currentScale;
             FacingLeft = true;
+
+            Bow.transform.localScale *= -1;
         }
         else if( x > 0 && FacingLeft)
         {
@@ -66,6 +81,7 @@ public class PlayerController : MonoBehaviour
             currentScale.x *= -1;
             gameObject.transform.localScale = currentScale;
             FacingLeft = false;
+            Bow.transform.localScale *= -1;
         }
      
     }
@@ -79,17 +95,30 @@ public class PlayerController : MonoBehaviour
         moveInput = value.Get<Vector2>();
     }
 
+    /// <summary>
+    /// This function gets the attack value when the mouse left button is pressed
+    /// </summary>
+    /// <param name="value"></param>
     void OnFire(InputValue value)
     {
         attack = value.Get<float>();
         StartCoroutine(ExecuteAfterTime(.5f));
     }
 
+    /// <summary>
+    /// Our collision detection function
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
     }
 
+    /// <summary>
+    /// This is a timer function. Executes code after the passed float timer variable
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
     IEnumerator ExecuteAfterTime(float time)
     {
         yield return new WaitForSeconds(time);
