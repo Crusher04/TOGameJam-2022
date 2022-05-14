@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public GameObject arrow;
     
     [SerializeField] private Transform shotPoint;
-    [SerializeField] private float launchForce = 15;
+    [SerializeField] private float launchForce;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GameObject Bow;
     
@@ -136,10 +136,10 @@ public class PlayerController : MonoBehaviour
     {
         GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
         
-        if(!FacingLeft)
+        if(FacingLeft)
             newArrow.GetComponent<Rigidbody2D>().velocity = Bow.transform.right * launchForce;
         else
-            newArrow.GetComponent<Rigidbody2D>().velocity = Bow.transform.right * (launchForce);
+            newArrow.GetComponent<Rigidbody2D>().velocity = Bow.transform.right * launchForce;
         
     }
 
