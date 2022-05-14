@@ -37,13 +37,25 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
-   
+
     /// <summary>
     /// Fixed Update Function
     /// </summary>
+
+    void Update()
+    {
+        //Gets the world position of our mouse cursor
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        mousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
+
+        //Bow Aiming
+        Vector2 bowPos = Bow.transform.position;
+        Vector2 bowDirection = mousePosition - bowPos;
+        Bow.transform.right = bowDirection;
+    }
+
     void FixedUpdate()
     {
-
         //Gets the world position of our mouse cursor
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         mousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
@@ -56,12 +68,6 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("moveState", moveInput.x != 0);
         anim.SetBool("fireState", attack != 0);
         
-        //Bow Aiming
-        Vector2 bowPos = Bow.transform.position;
-        Vector2 bowDirection = mousePosition - bowPos; 
-        Bow.transform.right = bowDirection;
-        
-
         //Flips our player sprite to orientate to where the mouse is
         Flip(mousePosition.x);
 
@@ -93,12 +99,6 @@ public class PlayerController : MonoBehaviour
             Bow.transform.localScale *= -1;
         }
 
-
-        if (rb.position.x > 11.0f)
-        {
-            rb.GetComponent<Rigidbody2D>().position = new Vector2(10.8f, 11.8f);
-        }
-
     }
 
     /// <summary>
@@ -116,9 +116,11 @@ public class PlayerController : MonoBehaviour
     /// <param name="value"></param>
     void OnFire(InputValue value)
     {
+        if (attack == 0)
+            Shoot();
         attack = value.Get<float>();
         StartCoroutine(ExecuteAfterTime(.5f));
-        Shoot();
+        
     }
 
     /// <summary>
@@ -133,8 +135,11 @@ public class PlayerController : MonoBehaviour
     void Shoot()
     {
         GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
-        newArrow.GetComponent<Rigidbody2D>().velocity = transform.right * launchForce;
-        Debug.Log(newArrow.GetComponent<Rigidbody2D>().velocity);
+        
+        if(!FacingLeft)
+            newArrow.GetComponent<Rigidbody2D>().velocity = Bow.transform.right * launchForce;
+        else
+            newArrow.GetComponent<Rigidbody2D>().velocity = Bow.transform.right * (launchForce);
         
     }
 
@@ -150,8 +155,7 @@ public class PlayerController : MonoBehaviour
         // Code to execute after the delay
         if(attack != 0)
         {
-            attack = 0;
-            
+            attack = 0;  
         }
     }
 
