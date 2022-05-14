@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public GameObject arrow;
     
     [SerializeField] private Transform shotPoint;
-    [SerializeField] private float launchForce;
+    [SerializeField] private float launchForce = 15;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GameObject Bow;
     
@@ -47,7 +47,6 @@ public class PlayerController : MonoBehaviour
         //Gets the world position of our mouse cursor
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         mousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
-        Debug.Log(mousePosition);
 
         //Moves Player based on moveSpeed & Fixed Delta Time
         if (attack == 0)
@@ -93,7 +92,13 @@ public class PlayerController : MonoBehaviour
             FacingLeft = false;
             Bow.transform.localScale *= -1;
         }
-     
+
+
+        if (rb.position.x > 11.0f)
+        {
+            rb.GetComponent<Rigidbody2D>().position = new Vector2(10.8f, 11.8f);
+        }
+
     }
 
     /// <summary>
@@ -113,6 +118,7 @@ public class PlayerController : MonoBehaviour
     {
         attack = value.Get<float>();
         StartCoroutine(ExecuteAfterTime(.5f));
+        Shoot();
     }
 
     /// <summary>
@@ -128,6 +134,8 @@ public class PlayerController : MonoBehaviour
     {
         GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
         newArrow.GetComponent<Rigidbody2D>().velocity = transform.right * launchForce;
+        Debug.Log(newArrow.GetComponent<Rigidbody2D>().velocity);
+        
     }
 
     /// <summary>
@@ -143,6 +151,7 @@ public class PlayerController : MonoBehaviour
         if(attack != 0)
         {
             attack = 0;
+            
         }
     }
 
