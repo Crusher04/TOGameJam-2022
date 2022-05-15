@@ -1663,8 +1663,9 @@ MonoBehaviour:
     spawnInterval: 2
   - waveName: WaveTwo
     numOfEnemies: 10
-    typeOfEnemies: []
-    spawnInterval: 0
+    typeOfEnemies:
+    - {fileID: 8452558020440183689, guid: 72683ad2d9c867f419e7b6c59a456025, type: 3}
+    spawnInterval: 1
   - waveName: FinalWave
     numOfEnemies: 1
     typeOfEnemies: []
@@ -1679,6 +1680,8 @@ MonoBehaviour:
   - {fileID: 1546146103}
   - {fileID: 2130268509}
   - {fileID: 1297798987}
+  currentWaveNumber: 0
+  canSpawn: 1
 --- !u!4 &843515624
 Transform:
   m_ObjectHideFlags: 0

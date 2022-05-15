@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - arrow
+  - EnemyGround
   layers:
   - Default
   - TransparentFX
