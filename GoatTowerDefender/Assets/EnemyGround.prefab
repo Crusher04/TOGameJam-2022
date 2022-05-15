@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 1534234301517412750}
   - component: {fileID: 6809515646338490529}
   - component: {fileID: 5205718971873235396}
+  - component: {fileID: 3051667525386318921}
   m_Layer: 0
   m_Name: EnemyGround
   m_TagString: EnemyGround
@@ -195,3 +196,15 @@ CircleCollider2D:
   m_Offset: {x: 0.48, y: -0.29}
   serializedVersion: 2
   m_Radius: 0.46
+--- !u!114 &3051667525386318921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8452558020440183689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c7790324c0c4d46be5c3cde8650019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
