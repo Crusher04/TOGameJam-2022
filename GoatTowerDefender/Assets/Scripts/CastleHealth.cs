@@ -7,8 +7,9 @@ public class CastleHealth : MonoBehaviour
 {
     public int maxHealth = 20;
     public int currentHealth;
-
+    public bool attacking = false;
     public HealthBar healthBar;
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -16,13 +17,31 @@ public class CastleHealth : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.setMaxHealth(maxHealth);
     }
-
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        
+    }
+    void OnTriggerEnter2D(Collider2D _collision)
+    {
+        if (_collision.gameObject.tag == "EnemyGround")
         {
-            TakeDamage(2);
+            Transform currentPos = _collision.gameObject.transform;
+            if(currentPos.position.x > 3)
+                _collision.transform.position = new Vector3(currentPos.position.x + 2, currentPos.position.y, currentPos.position.z);
+            else
+                _collision.transform.position = new Vector3(currentPos.position.x - 2, currentPos.position.y, currentPos.position.z);
+
+            currentHealth -= 2;
+        }
+
+        else if (_collision.gameObject.tag == "AGoat")
+        {
+            TakeDamage(3);
+        }
+
+        else if (_collision.gameObject.tag == "BGoat")
+        {
+            TakeDamage(5);
         }
     }
 
@@ -31,4 +50,5 @@ public class CastleHealth : MonoBehaviour
         currentHealth -= damage;
         healthBar.setHealth(currentHealth);
     }
+
 }
