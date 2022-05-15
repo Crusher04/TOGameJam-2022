@@ -1826,9 +1826,10 @@ MonoBehaviour:
     - {fileID: 8452558020440183689, guid: 72683ad2d9c867f419e7b6c59a456025, type: 3}
     spawnInterval: 1
   - waveName: FinalWave
-    numOfEnemies: 1
-    typeOfEnemies: []
-    spawnInterval: 0
+    numOfEnemies: 20
+    typeOfEnemies:
+    - {fileID: 8452558020440183689, guid: 72683ad2d9c867f419e7b6c59a456025, type: 3}
+    spawnInterval: 2
   spawnPoints:
   - {fileID: 80227387}
   - {fileID: 1415759110}

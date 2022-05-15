@@ -36,7 +36,7 @@ public class Arrow : MonoBehaviour
     {
         if(collision.gameObject.tag == "Ground")
         {
-            StartCoroutine(ExecuteAfterTime(3f));
+            StartCoroutine(ExecuteAfterTime(1.5f));
             Debug.Log("Arrow Collided with Ground");
             hasHit = true;
             rb.velocity = Vector2.zero;

@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     //Global Variabels
     public float moveSpeed = 1.0f;
     public GameObject arrow;
-    
+
     [SerializeField] private Transform shotPoint;
     [SerializeField] private float launchForce;
     [SerializeField] private Camera mainCamera;
@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
         //Set Animation and Rigidbody 
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        
     }
 
     /// <summary>
@@ -129,12 +130,14 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
+
         GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
         
         if(FacingLeft)
             newArrow.GetComponent<Rigidbody2D>().velocity = Bow.transform.right * launchForce;
         else
             newArrow.GetComponent<Rigidbody2D>().velocity = Bow.transform.right * (launchForce);
+       
         
     }
 
