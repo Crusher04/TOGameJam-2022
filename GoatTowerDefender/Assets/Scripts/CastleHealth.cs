@@ -19,7 +19,6 @@ public class CastleHealth : MonoBehaviour
     }
     void Update()
     {
-
     }
     void OnTriggerEnter2D(Collider2D _collision)
     {
