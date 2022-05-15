@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
+    public string mainLevel;
+
     // Start is called before the first frame update
     void Start()
     {
