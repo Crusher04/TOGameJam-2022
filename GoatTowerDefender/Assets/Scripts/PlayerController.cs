@@ -52,6 +52,10 @@ public class PlayerController : MonoBehaviour
         Vector2 bowPos = Bow.transform.position;
         Vector2 bowDirection = mousePosition - bowPos;
         Bow.transform.right = bowDirection;
+
+        //Falling off edge
+        if (rb.position.y < 11.2f)
+            rb.gravityScale = 100f;
     }
 
     void FixedUpdate()
@@ -123,15 +127,6 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    /// <summary>
-    /// Our collision detection function
-    /// </summary>
-    /// <param name="collision"></param>
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
-    }
-
     void Shoot()
     {
         GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
@@ -139,7 +134,7 @@ public class PlayerController : MonoBehaviour
         if(FacingLeft)
             newArrow.GetComponent<Rigidbody2D>().velocity = Bow.transform.right * launchForce;
         else
-            newArrow.GetComponent<Rigidbody2D>().velocity = Bow.transform.right * launchForce;
+            newArrow.GetComponent<Rigidbody2D>().velocity = Bow.transform.right * (launchForce);
         
     }
 
