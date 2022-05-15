@@ -6,13 +6,14 @@ public class Arrow : MonoBehaviour
 {
     public Rigidbody2D rb;
     private bool hasHit = false;
-
+    public float damage = 5.0f;
+    private Collider2D arrowColl;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        
+        arrowColl = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -40,6 +41,7 @@ public class Arrow : MonoBehaviour
             hasHit = true;
             rb.velocity = Vector2.zero;
             rb.isKinematic = true;
+            arrowColl.enabled = false;
         }
     }
 

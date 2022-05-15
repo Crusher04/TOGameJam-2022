@@ -8,13 +8,13 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     public GameObject player;
     private bool hasTurned = false;
+    public float health = 1f;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
-
     }
 
     // Update is called once per frame
@@ -22,6 +22,11 @@ public class Enemy : MonoBehaviour
     {
         MoveTowardsTarget();
         RotateTowardsTarget();
+
+        if(health <= 0.0f)
+            Destroy(gameObject);
+
+        Debug.Log("Enemy Health = " + health);
     }
 
     private void MoveTowardsTarget()
@@ -36,5 +41,16 @@ public class Enemy : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
             hasTurned = true;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "arrow")
+        {
+            health -= 1;
+            Destroy(collision.gameObject);
+        }
+
+        
     }
 }

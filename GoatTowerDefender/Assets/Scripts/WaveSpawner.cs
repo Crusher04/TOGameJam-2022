@@ -17,9 +17,9 @@ public class WaveSpawner : MonoBehaviour
     public Transform[] spawnPoints;
 
     private Wave currentWave;
-    private int currentWaveNumber;
+    public int currentWaveNumber;
 
-    private bool canSpawn = true;
+    public bool canSpawn = true;
     private float nextSpawnTime;
 
     private void Update()
@@ -27,11 +27,11 @@ public class WaveSpawner : MonoBehaviour
         currentWave = waves[currentWaveNumber];
         SpawnWave();
 
-        GameObject[] totalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] totalEnemies = GameObject.FindGameObjectsWithTag("EnemyGround");
 
-        if(totalEnemies.Length == 0 && !canSpawn && currentWaveNumber + 1  != waves.Length)
+        if(totalEnemies.Length == 0 && !canSpawn && currentWaveNumber + 1 != waves.Length)
         {
-            
+            SpawnNextWave();
         }
 
     }
