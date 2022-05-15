@@ -19,19 +19,18 @@ public class CastleHealth : MonoBehaviour
     }
     void Update()
     {
-        
     }
     void OnTriggerEnter2D(Collider2D _collision)
     {
         if (_collision.gameObject.tag == "EnemyGround")
         {
             Transform currentPos = _collision.gameObject.transform;
-            if(currentPos.position.x > 3)
+            if (currentPos.position.x > 3)
                 _collision.transform.position = new Vector3(currentPos.position.x + 2, currentPos.position.y, currentPos.position.z);
             else
                 _collision.transform.position = new Vector3(currentPos.position.x - 2, currentPos.position.y, currentPos.position.z);
 
-            currentHealth -= 2;
+            TakeDamage(2);
         }
 
         else if (_collision.gameObject.tag == "AGoat")

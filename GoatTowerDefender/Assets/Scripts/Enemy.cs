@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
         MoveTowardsTarget();
         RotateTowardsTarget();
 
-        if(health <= 0.0f)
+        if (health <= 0.0f)
             Destroy(gameObject);
 
         Debug.Log("Enemy Health = " + health);
